@@ -1,0 +1,51 @@
+#!/usr/bin/python3
+# -*- coding: utf-8 -*-
+
+from selenium import webdriver
+import time
+
+#百度搜索selenium
+driver = webdriver.Chrome("/Users/zouyutao/Downloads/chromedriver")
+#driver=webdriver.Chrome()  #如果不输入路径的话就会报错，除非把chromedriver的路径添加到系统路径中
+driver.get("https://www.baidu.com/")
+
+driver.find_element_by_id("kw").send_keys("selenium")
+driver.find_element_by_id("su").click()
+driver.quit()
+
+#在51job上搜索与python有关的工作并输出
+driver = webdriver.Chrome("/Users/zouyutao/Downloads/chromedriver")   #webdriver实例对象
+driver.implicitly_wait(5)
+driver.get("https://www.51job.com/")
+
+
+elements = driver.find_element_by_id("kwdselectid")
+elements.send_keys("python")
+
+elements1 = driver.find_element_by_id("work_position_input")
+elements1.click()
+
+#eles = driver.find_elements_by_id("work_position_click_ip_location")
+eles = driver.find_elements_by_css_selector("#work_position_click_ip_location em[class=on]")
+
+
+for ele in eles:
+    ele.click()
+
+#driver.find_element_by_id("work_position_click_center_right_list_category_000000_020000").click()
+driver.find_element_by_id("work_position_click_center_right_list_category_000000_220200").click()
+time.sleep(5)
+driver.find_element_by_id("work_position_click_bottom_save").click()
+time.sleep(5)
+driver.find_element_by_css_selector(".content .ush button").click()
+
+jobs = driver.find_elements_by_css_selector("#resultList div[class=el]")
+
+for job in jobs:
+    fields = job.find_elements_by_tag_name("span")
+    stringfields = [field.text for field in fields]
+    print('|'.join(stringfields))
+
+driver.quit()
+
+
