@@ -1,0 +1,30 @@
+#不在同一个目录下，如何调用文件
+
+#mulu-1下有one_sele文件
+#!/usr/bin/python3
+# -*- coding: UTF-8 -*-
+
+import sys
+
+def add(a, b):
+    return a + b
+
+if __name__ == '__main__':
+    c = add(8, 3)
+    print(c)
+
+
+#mulu-2下有test-1文件，需要在系统变量中加入mulu-1的目录
+#!/usr/bin/python3
+# -*- coding: UTF-8 -*-
+
+import sys
+from os.path import dirname, abspath
+from one_sele import add
+
+project_path = dirname(dirname(abspath(__file__))) #求出当前文件的目录绝对值，然后求上两层的目录
+sys.path.append(project_path + '/mulu-1')
+
+c = add(2, 3)
+print(c)
+# print(sys.path)
